@@ -91,7 +91,8 @@ function App() {
       const response = await axios.post('https://bionix-api.onrender.com/predict', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
-        }
+        },
+        timeout: 300000 // 5 Minute Timeout for Render Cold Starts
       });
       
       setResults(response.data.results);
