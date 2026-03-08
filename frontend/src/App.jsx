@@ -83,7 +83,7 @@ function App() {
 
     try {
       // Assuming FastAPI is running on localhost:8000
-      const response = await axios.post('http://localhost:8000/predict', formData, {
+      const response = await axios.post('https://bionix-api.onrender.com/predict', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
