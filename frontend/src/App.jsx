@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import UploadSection from './components/UploadSection';
 import ResultsDashboard from './components/ResultsDashboard';
-import { ActivitySquare } from 'lucide-react';
+import { ActivitySquare, Menu, X } from 'lucide-react';
 import LiveArmVisualization from './components/LiveArmVisualization';
 import { useGesture, GestureProvider } from './context/GestureContext';
 import AboutView from './components/AboutView';
@@ -58,6 +58,7 @@ const CinematicLoader = () => {
 };
 
 function App() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [currentView, setCurrentView] = useState('home');
   const [results, setResults] = useState(null);
   const [visualization, setVisualization] = useState(null);
@@ -131,22 +132,51 @@ function App() {
         {/* Minimalist Museum Header */}
         <motion.header 
           initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.8 }}
-          className="flex flex-col md:flex-row items-center justify-between w-full max-w-7xl mx-auto mb-16 border-b border-white/5 pb-6"
+          className="flex items-center justify-between w-full max-w-7xl mx-auto mb-16 border-b border-white/5 pb-6 relative z-50"
         >
-          <div className="flex items-center space-x-4 cursor-pointer mb-6 md:mb-0" onClick={() => setCurrentView('home')}>
-            {/* Signature Orange Dot */}
-            <div className={`w-3 h-3 rounded-full ${currentView === 'home' ? 'bg-[var(--color-museum-accent)]' : 'bg-white/20'}`}></div>
-            <div>
-              <h1 className="text-3xl font-serif text-[var(--color-museum-light)] tracking-tight">
-                BIONIX
-              </h1>
+          <div className="flex items-center justify-between w-full md:w-auto">
+            <div className="flex items-center space-x-4 cursor-pointer" onClick={() => setCurrentView('home')}>
+              {/* Signature Orange Dot */}
+              <div className={`w-3 h-3 rounded-full ${currentView === 'home' ? 'bg-[var(--color-museum-accent)]' : 'bg-white/20'}`}></div>
+              <div>
+                <h1 className="text-3xl font-serif text-[var(--color-museum-light)] tracking-tight">
+                  BIONIX
+                </h1>
+              </div>
             </div>
+
+            {/* Mobile Menu Toggle Button */}
+            <button 
+              className="md:hidden text-white/50 hover:text-[var(--color-museum-accent)] transition-colors"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
           </div>
-          <nav className="flex space-x-6 md:space-x-12 text-[10px] md:text-xs font-bold tracking-widest uppercase text-white/50">
+
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex space-x-12 text-xs font-bold tracking-widest uppercase text-white/50">
             <span onClick={() => setCurrentView('about')} className={`cursor-pointer transition-colors ${currentView === 'about' ? 'text-[var(--color-museum-accent)]' : 'hover:text-[var(--color-museum-accent)]'}`}>About</span>
             <span onClick={() => setCurrentView('exhibits')} className={`cursor-pointer transition-colors ${currentView === 'exhibits' ? 'text-[var(--color-museum-accent)]' : 'hover:text-[var(--color-museum-accent)]'}`}>Exhibits</span>
             <span onClick={() => setCurrentView('contact')} className={`cursor-pointer transition-colors ${currentView === 'contact' ? 'text-[var(--color-museum-accent)]' : 'hover:text-[var(--color-museum-accent)]'}`}>Contact</span>
           </nav>
+
+          {/* Mobile Sliding Navigation */}
+          <AnimatePresence>
+            {isMobileMenuOpen && (
+              <motion.nav
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                className="absolute top-[80px] left-0 w-full bg-[#121212]/95 backdrop-blur-3xl border-b border-white/5 z-50 md:hidden overflow-hidden flex flex-col pt-6 pb-8 space-y-8 text-xs font-bold tracking-widest uppercase text-white/50 items-center justify-center shadow-2xl shadow-black"
+              >
+                <span onClick={() => { setCurrentView('about'); setIsMobileMenuOpen(false); }} className={`cursor-pointer transition-colors ${currentView === 'about' ? 'text-[var(--color-museum-accent)]' : 'hover:text-[var(--color-museum-accent)]'}`}>About</span>
+                <span onClick={() => { setCurrentView('exhibits'); setIsMobileMenuOpen(false); }} className={`cursor-pointer transition-colors ${currentView === 'exhibits' ? 'text-[var(--color-museum-accent)]' : 'hover:text-[var(--color-museum-accent)]'}`}>Exhibits</span>
+                <span onClick={() => { setCurrentView('contact'); setIsMobileMenuOpen(false); }} className={`cursor-pointer transition-colors ${currentView === 'contact' ? 'text-[var(--color-museum-accent)]' : 'hover:text-[var(--color-museum-accent)]'}`}>Contact</span>
+              </motion.nav>
+            )}
+          </AnimatePresence>
         </motion.header>
 
         {/* Main Content */}
