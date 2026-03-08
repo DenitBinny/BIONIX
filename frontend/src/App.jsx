@@ -82,11 +82,7 @@ function App() {
     });
 
     try {
-<<<<<<< HEAD
-      // Assuming FastAPI is running on localhost:8000
-=======
       // Live Render Hosted Backend API
->>>>>>> 9a770f0 (Update API endpoint to live Render URL)
       const response = await axios.post('https://bionix-api.onrender.com/predict', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
@@ -131,9 +127,9 @@ function App() {
         {/* Minimalist Museum Header */}
         <motion.header 
           initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.8 }}
-          className="flex items-center justify-between w-full max-w-7xl mx-auto mb-16 border-b border-white/5 pb-6"
+          className="flex flex-col md:flex-row items-center justify-between w-full max-w-7xl mx-auto mb-16 border-b border-white/5 pb-6"
         >
-          <div className="flex items-center space-x-4 cursor-pointer" onClick={() => setCurrentView('home')}>
+          <div className="flex items-center space-x-4 cursor-pointer mb-6 md:mb-0" onClick={() => setCurrentView('home')}>
             {/* Signature Orange Dot */}
             <div className={`w-3 h-3 rounded-full ${currentView === 'home' ? 'bg-[var(--color-museum-accent)]' : 'bg-white/20'}`}></div>
             <div>
@@ -142,7 +138,7 @@ function App() {
               </h1>
             </div>
           </div>
-          <nav className="hidden md:flex space-x-12 text-xs font-bold tracking-widest uppercase text-white/50">
+          <nav className="flex space-x-6 md:space-x-12 text-[10px] md:text-xs font-bold tracking-widest uppercase text-white/50">
             <span onClick={() => setCurrentView('about')} className={`cursor-pointer transition-colors ${currentView === 'about' ? 'text-[var(--color-museum-accent)]' : 'hover:text-[var(--color-museum-accent)]'}`}>About</span>
             <span onClick={() => setCurrentView('exhibits')} className={`cursor-pointer transition-colors ${currentView === 'exhibits' ? 'text-[var(--color-museum-accent)]' : 'hover:text-[var(--color-museum-accent)]'}`}>Exhibits</span>
             <span onClick={() => setCurrentView('contact')} className={`cursor-pointer transition-colors ${currentView === 'contact' ? 'text-[var(--color-museum-accent)]' : 'hover:text-[var(--color-museum-accent)]'}`}>Contact</span>
