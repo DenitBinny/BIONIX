@@ -66,6 +66,10 @@ function App() {
 
   const [metrics, setMetrics] = useState(null);
 
+  useEffect(() => {
+    console.log("BIONIX Web UI Initialized - Mobile Navigation Active");
+  }, []);
+
   const handlePredict = async (files) => {
     setIsPredicting(true);
     setError(null);
