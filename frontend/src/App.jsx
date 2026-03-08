@@ -82,7 +82,11 @@ function App() {
     });
 
     try {
+<<<<<<< HEAD
       // Assuming FastAPI is running on localhost:8000
+=======
+      // Live Render Hosted Backend API
+>>>>>>> 9a770f0 (Update API endpoint to live Render URL)
       const response = await axios.post('https://bionix-api.onrender.com/predict', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
